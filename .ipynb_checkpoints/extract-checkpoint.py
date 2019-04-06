@@ -15,7 +15,8 @@
    "metadata": {},
    "outputs": [],
    "source": [
-    "df = pd.read_csv(\"Resources/state_M2017_dl.csv\")"
+    "df = pd.read_csv(\"Resources/state_M2017_dl.csv\")\n",
+    "df"
    ]
   },
   {
@@ -33,7 +34,8 @@
    "metadata": {},
    "outputs": [],
    "source": [
-    "new_df = df[df[\"OCC_CODE\"].str.contains(\"^15\")]"
+    "new_df = df[df[\"OCC_CODE\"].str.contains(\"^15\")]\n",
+    "new_df"
    ]
   },
   {
@@ -42,7 +44,8 @@
    "metadata": {},
    "outputs": [],
    "source": [
-    "final_df = new_df.rename(columns={\"H_MEDIAN\": \"HOURLY_MEDIAN\", \"A_MEDIAN\": \"ANNUAL_MEDIAN\", \"OCC_CODE\": \"OCCUPATION_CODE\", \"OCC_TITLE\": \"OCCUPATION_TITLE\"})"
+    "final_df = new_df.rename(columns={\"H_MEDIAN\": \"HOURLY_MEDIAN\", \"A_MEDIAN\": \"ANNUAL_MEDIAN\", \"OCC_CODE\": \"OCCUPATION_CODE\", \"OCC_TITLE\": \"OCCUPATION_TITLE\"})\n",
+    "final_df"
    ]
   },
   {
@@ -53,20 +56,6 @@
    "source": [
     "final_df.drop(columns=[\"ANNUAL\", \"HOURLY\"])"
    ]
-  },
-  {
-   "cell_type": "code",
-   "execution_count": null,
-   "metadata": {},
-   "outputs": [],
-   "source": []
-  },
-  {
-   "cell_type": "code",
-   "execution_count": null,
-   "metadata": {},
-   "outputs": [],
-   "source": []
   }
  ],
  "metadata": {
