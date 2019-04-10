@@ -1,16 +1,36 @@
 import pandas as pd
-import extract
+import numpy as np
 
-ca_df = final_df[final_df["ST"] == "CA"]
-ca_df
+def transform_data(df):
+    
+    # Filter by computer related jobs
+    tech_df = df[df["OCC_CODE"].str.contains("^15")]
+    if tech_df is None:
+        print("no data in tech_df")
+    
+    # Renamed columns
+    updated_tech_df = tech_df.rename(columns={"H_MEDIAN": "hourly_median", "A_MEDIAN": "annual_median", "OCC_CODE": "occupation_code", "OCC_TITLE": "occupation_title"})
+    if updated_tech_df is None:
+        print("no data in updated_tech_df")
+    
+    # Dropped columns with NaN
+    updated_tech_df = updated_tech_df.drop(columns=["ANNUAL", "HOURLY"])
+    if updated_tech_df is None:
+        print("no data in updated_tech_df dropped columns")
+    
+    print(f'Heres the type of updated_tech_df: {type(updated_tech_df)}')
+    
+    # Filter extracted data to include only california data
+    ca_tech_df = updated_tech_df[updated_tech_df["ST"] == "CA"]
 
-occupations = ca_df[["occupation_code", "occupation_title"]].copy()
-occupations.reset_index(drop=True, inplace=True)
-occupations
+    print(f'Heres the type of ca_tech_df: {type(ca_tech_df)}')
 
-yearly_stats = ca_df[["occupation_code", "hourly_median", "annual_median"]].copy()
-yearly_stats.reset_index(drop=True, inplace=True)
-yearly_stats
+    print(f'The df columns: {ca_tech_df.columns}')
 
-cols = ["HOURLY_MEDIAN", "ANNUAL_MEDIAN"]
-yearly_stats[cols] = yearly_stats[cols].apply(pd.to_numeric, errors='coerce', axis=1)
+    # create occupation table
+    occupations = ca_tech_df[["occupation_code", "occupation_title"]].reset_index(drop=True).copy()
+
+    # create year stats table
+    yearly_stats = ca_tech_df[["occupation_code", "hourly_median", "annual_median"]].reset_index(drop=True).copy()
+
+    return (occupations, yearly_stats)

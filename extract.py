@@ -1,11 +1,12 @@
 import pandas as pd
+import numpy as np
 
-df = pd.read_csv("Resources/state_M2017_dl.csv")
+def extract_data(file_name):
 
-df["OCC_TITLE"].value_counts()
+    df = pd.read_excel(file_name)
+    if df is None:
+        print("nothing to see")
 
-new_df = df[df["OCC_CODE"].str.contains("^15")]
+    return df
 
-final_df = new_df.rename(columns={"H_MEDIAN": "HOURLY_MEDIAN", "A_MEDIAN": "ANNUAL_MEDIAN", "OCC_CODE": "OCCUPATION_CODE", "OCC_TITLE": "OCCUPATION_TITLE"})
-
-final_df.drop(columns=["ANNUAL", "HOURLY"])
+extract_data("Resources/state_M2017_dl.xlsx")
